@@ -1,0 +1,91 @@
+---
+title: "AnalyzeData.SharmaMohanRK"
+output: pdf_document
+date: "2023-04-19"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(ggplot2)
+library(RMySQL)
+library(RSQLite)
+library(dplyr) 
+library(DBI)
+```
+
+
+```{r}
+mydb <- dbConnect(MySQL(), user='root', dbname='testprac', password='dbms2023', host='localhost')
+```
+
+```{r}
+jcombined <- dbGetQuery(mydb, "SELECT * FROM journalfact")
+```
+
+
+### Analytical Query I: Top five journals with the most articles published in them for the time period. Think about how you would best present this information so it is easily usable by an analyst or manager.
+
+```{r}
+
+q <- "
+SELECT issn, Count(*) AS NumberofArticles
+FROM journalfact
+GROUP BY issn
+ORDER BY NumberofArticles DESC
+LIMIT 5;
+"
+
+result1 <- dbGetQuery(mydb, q)
+
+```
+
+
+### Top 5 journals with most articles
+
+```{r}
+
+ggplot(result1, aes(x = issn, y = NumberofArticles)) +
+  geom_bar(stat = "identity") +
+  
+  labs(title="Top 5 journals with most articles", x= "Journal Name", y="Number of articles published")
+
+```
+
+###Analytical Query II: Number of articles per journal per year broken down by quarter. 
+
+```{r AnalyticalQuery2}
+q2 <-"
+SELECT journaltitle, year, quarter, COUNT(*) AS NumberofJournals
+FROM JournalFact
+GROUP BY journaltitle, year, quarter
+ORDER BY NumberofJournals DESC
+"
+
+result2 <- dbGetQuery(mydb, q2)
+
+head(result2)
+
+```
+
+# One can see that in the fourth quarter of 1975, there were 1036 articles in the journal The Journal of Pharmacy and Pharmacology.
+
+```{r}
+year_d <- as.data.frame(jcombined %>% group_by(year) %>% summarise(count=n()))
+ggplot(data = year_d, aes(x = factor(year), y = count)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  labs(title = "Year vs Count", x = "Year", y = "Count") +
+  theme_bw()
+```
+# Maximum Articles -> 1975
+
+```{r}
+quarter_d <- as.data.frame(jcombined %>% group_by(quarter) %>% summarise(count=n()))
+quarter_d <- quarter_d %>%  filter(!row_number() %in% c(5))
+
+ggplot(quarter_d, aes(x=quarter, y=count)) +
+  geom_bar(stat = "identity") + scale_x_continuous()
+```
+# Maximum Articles -> 1st Quater
