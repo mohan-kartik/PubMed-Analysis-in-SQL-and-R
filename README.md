@@ -1,7 +1,8 @@
-# PubMed-Analysis-in-SQL-and-R
+<P ALIGN='CENTER'><img src= 'https://github.com/mohan-kartik/PubMed-Analysis-in-SQL-and-R/assets/42971268/b4605c7e-e6b0-4d51-aeac-baaf80cd92f6'>
+  
+## Objectives:
 Extract PubMed data from an XML document to store relationally in a SQLite database (transactional database) and create an "analytical" database using a star schema in MySQL for analysis.
 
-## Objectives:
 - Extract XML document,
 - realize the relational schema in MySQL, 
 - load data into the database, 
