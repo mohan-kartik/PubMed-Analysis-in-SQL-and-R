@@ -20,13 +20,13 @@ Part 2: Create Star/Snowflake Schema (LoadDataWarehouse.Rmd)
   - Create and populate a star schema for journal facts. 
   - Perform the analytical queries below:
   
-  i) What the are number of articles published in every journal in 2012 and 2013?
+    i) What the are number of articles published in every journal in 2012 and 2013?
   
-  ii) What is the number of articles published in every journal in each quarter of 2012 through 2015?
+    ii) What is the number of articles published in every journal in each quarter of 2012 through 2015?
   
-  iii) How many articles were published each quarter (across all years)?
+    iii) How many articles were published each quarter (across all years)?
   
-  iv) How many unique authors published articles in each year for which there is data?
+    iv) How many unique authors published articles in each year for which there is data?
 
 Part 3: Explore and Mine Data (AnalyzeData.Rmd)
   - Top five journals with the most articles published in them for the time period. 
